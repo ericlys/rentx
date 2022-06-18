@@ -3,6 +3,7 @@ import React from 'react';
 import { RFValue } from 'react-native-responsive-fontsize';
 
 import Logo from '../../assets/logo.svg';
+import { Car } from '../../components/Car';
 
 import {
   Container,
@@ -12,6 +13,26 @@ import {
 } from './styles';
 
 export function Home(){
+
+  const carDataOne = {
+    brand: 'fiat',
+    name: 'TORO',
+    rent: {
+      period: 'AO DIA',
+      price: 230,
+    },
+    thumbnail: 'https://production.autoforce.com/uploads/version/profile_image/6190/comprar-ranch-turbo-diesel-at9_cdc67fb425.png'
+  }
+  const carDataTwo = {
+    brand: 'volkswagen',
+    name: 'Gol',
+    rent: {
+      period: 'AO DIA',
+      price: 160,
+    },
+    thumbnail: 'https://carros0.com.br/wp-content/uploads/novo-gol-2022-580x375.png'
+  }
+
   return (
     <Container>
       <StatusBar
@@ -30,6 +51,9 @@ export function Home(){
           </TotalCars>
         </HeaderContent>
       </Header>
+
+      <Car data={carDataOne}/>
+      <Car data={carDataTwo}/>
     </Container>
   );
 }
