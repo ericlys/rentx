@@ -6,6 +6,7 @@ import Logo from '../../assets/logo.svg';
 import { Car } from '../../components/Car';
 
 import {
+  CardList,
   Container,
   Header,
   HeaderContent,
@@ -22,15 +23,6 @@ export function Home(){
       price: 230,
     },
     thumbnail: 'https://production.autoforce.com/uploads/version/profile_image/6190/comprar-ranch-turbo-diesel-at9_cdc67fb425.png'
-  }
-  const carDataTwo = {
-    brand: 'volkswagen',
-    name: 'Gol',
-    rent: {
-      period: 'AO DIA',
-      price: 160,
-    },
-    thumbnail: 'https://carros0.com.br/wp-content/uploads/novo-gol-2022-580x375.png'
   }
 
   return (
@@ -52,8 +44,11 @@ export function Home(){
         </HeaderContent>
       </Header>
 
-      <Car data={carDataOne}/>
-      <Car data={carDataTwo}/>
+      <CardList  
+        data={[1,2,3,4,5,6,7,8]}
+        keyExtractor={item => String(item)}
+        renderItem={ ({item}) => <Car data={carDataOne}/>}
+      />
     </Container>
   );
 }
