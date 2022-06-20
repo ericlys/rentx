@@ -1,6 +1,8 @@
 import styled from 'styled-components/native';
 import Constants  from 'expo-constants';
 import { RFValue } from 'react-native-responsive-fontsize';
+import { getBottomSpace, getStatusBarHeight } from 'react-native-iphone-x-helper';
+
 
 export const Container = styled.View`
   flex: 1;
@@ -18,7 +20,7 @@ export const Header = styled.View`
 `;
 
 export const CarImages = styled.View`
-  margin-top: ${Constants.statusBarHeight + 16}px;
+  margin-top: ${getStatusBarHeight() + 16}px;
 `;
 
 export const Content = styled.ScrollView.attrs({
@@ -88,6 +90,12 @@ export const Acessories = styled.View`
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
+  
+  margin-top: 16px;
+`;
 
-  margin-top: 16px
+export const Footer = styled.View`
+  width: 100%;
+  background-color: ${({ theme }) => theme.colors.background_secondary};
+  padding: 24px 24px ${getBottomSpace() + 24}px;
 `;

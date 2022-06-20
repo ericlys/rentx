@@ -24,8 +24,10 @@ import {
   Period,
   Price,
   About,
-  Acessories
+  Acessories,
+  Footer
 } from './styles';
+import { Button } from '../../components/Button';
 
 export function CarDetails(){
   return (
@@ -68,6 +70,10 @@ export function CarDetails(){
           Small Wide 4×4 compartilhada com o Jeep Renegade, Jeep Compass e o Fiat 500X.
         </About>
       </Content>
+
+      <Footer>
+        <Button title='Confirmar'/>
+      </Footer>
 
     </Container>
   );
