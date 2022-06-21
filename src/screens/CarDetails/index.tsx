@@ -51,17 +51,17 @@ export function CarDetails(){
 
           <Rend>
             <Period>Ao dia</Period>
-            <Price>R$ 580</Price>
+            <Price>R$ 360</Price>
           </Rend>
         </Details>
 
         <Acessories>
-          <Accessory name='380Km/h' icon={speedSvg}/>
-          <Accessory name='3.2S' icon={accelerationSvg}/>
-          <Accessory name='800 HP' icon={forceSvg}/>
-          <Accessory name='Gasolina' icon={gasolineSvg}/>
+          <Accessory name='197Km/h' icon={speedSvg}/>
+          <Accessory name='11S' icon={accelerationSvg}/>
+          <Accessory name='180 HP' icon={forceSvg}/>
+          <Accessory name='Diesel' icon={gasolineSvg}/>
           <Accessory name='Auto' icon={exchangeSvg}/>
-          <Accessory name='2 Pessoas' icon={peopleSvg}/>
+          <Accessory name='5 Pessoas' icon={peopleSvg}/>
         </Acessories>
 
         <About>
