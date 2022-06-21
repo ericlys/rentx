@@ -4,6 +4,8 @@ import { BackButton } from '../../components/BackButton/inde';
 
 import ArrowSvg from '../../assets/arrow.svg';
 import { StatusBar } from 'expo-status-bar';
+import { Button } from '../../components/Button';
+import { Calendar } from '../../components/Calendar';
 
 import {
   Container,
@@ -16,7 +18,6 @@ import {
   Content,
   Footer
 } from './styles';
-import { Button } from '../../components/Button';
 
 export function Scheduling(){
   const theme = useTheme();
@@ -56,7 +57,7 @@ export function Scheduling(){
       </Header>
 
       <Content>
-
+        <Calendar/>
       </Content>
 
       <Footer>
