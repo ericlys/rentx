@@ -1,5 +1,6 @@
 import React from 'react';
 import { Feather } from '@expo/vector-icons';
+import { useNavigation, NavigationProp, ParamListBase} from '@react-navigation/native';
 
 import { Accessory } from '../../components/Accessory';
 import { BackButton } from '../../components/BackButton/inde';
@@ -46,6 +47,13 @@ import {
 
 export function SchedulingDetails(){
   const theme = useTheme();
+
+  const { navigate }: NavigationProp<ParamListBase>  = useNavigation();
+
+  function handleConfirmRental() {
+    navigate('SchedulingComplete');
+  }
+
   return (
     <Container>
       <Header>
@@ -112,7 +120,9 @@ export function SchedulingDetails(){
       </Content>
 
       <Footer>
-        <Button title='Confirmar'/>
+        <Button 
+          title='Alugar agora' color={theme.colors.success} onPress={handleConfirmRental}
+        />
       </Footer>
 
     </Container>
