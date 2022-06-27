@@ -1,10 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigation, NavigationProp, ParamListBase } from '@react-navigation/native';
 import { RFValue } from 'react-native-responsive-fontsize';
 
 import Logo from '../../assets/logo.svg';
 import { Car } from '../../components/Car';
+
+import { api } from '../../service/api';
 
 import {
   CardList,
@@ -13,29 +15,55 @@ import {
   HeaderContent,
   TotalCars
 } from './styles';
+import { CarDTO } from '../../dtos/CarDTO';
+import { Load } from '../../components/Load';
 
 export function Home(){
+  const [cars, setCars] = useState<CarDTO[]>([]);
+  const [loading, setLoading] = useState(true);
   const { navigate }: NavigationProp<ParamListBase>  = useNavigation();
-
-  const carDataOne = {
-    brand: 'fiat',
-    name: 'TORO',
-    rent: {
-      period: 'AO DIA',
-      price: 230,
-    },
-    thumbnail: 'https://production.autoforce.com/uploads/version/profile_image/6190/comprar-ranch-turbo-diesel-at9_cdc67fb425.png'
-  }
 
   function handleCarDetails() {
     navigate('CarDetails');
   }
+  useEffect(()=> {
+    async function fetchCars() {
+      try {
+        console.log(api.getUri())
+        const response = await api.get('/cars');
+        setCars(response.data);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+
+    }
+
+    fetchCars();
+  },[])
+  useEffect(()=> {
+    async function fetchCars() {
+      try {
+        console.log(api.getUri())
+        const response = await api.get('/cars');
+        setCars(response.data);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+
+    }
+
+    fetchCars();
+  },[])
 
   return (
     <Container>
       <StatusBar
         style='light'
-        // translucent={false}
+        translucent={true}
         backgroundColor='transparent'
       />
       <Header>
@@ -49,13 +77,15 @@ export function Home(){
           </TotalCars>
         </HeaderContent>
       </Header>
-
-      <CardList  
-        data={[1,2,3,4,5,6,7,8]}
-        keyExtractor={item => String(item)}
+      { loading ? <Load/> : 
+        <CardList  
+        data={cars}
+        keyExtractor={item => item.id}
         renderItem={ ({item}) => 
-        <Car data={carDataOne} onPress={handleCarDetails}/>}
+        <Car data={item} onPress={handleCarDetails}/>}
       />
+      }
+      
     </Container>
   );
 }
