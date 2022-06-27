@@ -23,25 +23,9 @@ export function Home(){
   const [loading, setLoading] = useState(true);
   const { navigate }: NavigationProp<ParamListBase>  = useNavigation();
 
-  function handleCarDetails() {
-    navigate('CarDetails');
+  function handleCarDetails(car:CarDTO) {
+    navigate('CarDetails', { car });
   }
-  useEffect(()=> {
-    async function fetchCars() {
-      try {
-        console.log(api.getUri())
-        const response = await api.get('/cars');
-        setCars(response.data);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
-      }
-
-    }
-
-    fetchCars();
-  },[])
   useEffect(()=> {
     async function fetchCars() {
       try {
@@ -82,7 +66,7 @@ export function Home(){
         data={cars}
         keyExtractor={item => item.id}
         renderItem={ ({item}) => 
-        <Car data={item} onPress={handleCarDetails}/>}
+        <Car data={item} onPress={() => handleCarDetails(item)}/>}
       />
       }
       

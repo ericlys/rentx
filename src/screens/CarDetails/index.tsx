@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigation, NavigationProp, ParamListBase} from '@react-navigation/native';
+import { useNavigation, NavigationProp, ParamListBase, useRoute} from '@react-navigation/native';
 
 import { Accessory } from '../../components/Accessory';
 import { BackButton } from '../../components/BackButton/inde';
@@ -25,57 +25,67 @@ import {
   Period,
   Price,
   About,
-  Acessories,
+  Accessories,
   Footer
 } from './styles';
 import { Button } from '../../components/Button';
+import { CarDTO } from '../../dtos/CarDTO';
+
+interface Params {
+  car: CarDTO;
+}
 
 export function CarDetails(){
-  const { navigate }: NavigationProp<ParamListBase>  = useNavigation();
+  const { navigate, goBack }: NavigationProp<ParamListBase>  = useNavigation();
+  const route = useRoute();
+  const { car } = route.params as Params;
 
   function handleConfirmRental() {
     navigate('Scheduling');
   }
 
+  function handleBack() {
+    goBack();
+  }
+
   return (
     <Container>
       <Header>
-        <BackButton onPress={() => {}}/>
+        <BackButton onPress={handleBack}/>
       </Header>
 
       <CarImages>
         <ImageSlider 
-          imagesUrl={['https://production.autoforce.com/uploads/version/profile_image/6190/comprar-ranch-turbo-diesel-at9_cdc67fb425.png']} 
+          imagesUrl={car.photos} 
         />
       </CarImages>
 
       <Content>
         <Details>
           <Description>
-            <Brand>Fiat</Brand>
-            <Name>TORO</Name>
+            <Brand>{car.brand}</Brand>
+            <Name>{car.name}</Name>
           </Description>
 
           <Rend>
-            <Period>Ao dia</Period>
-            <Price>R$ 360</Price>
+            <Period>{car.rent.period}</Period>
+            <Price>R$ {car.rent.price}</Price>
           </Rend>
         </Details>
 
-        <Acessories>
-          <Accessory name='197Km/h' icon={speedSvg}/>
-          <Accessory name='11S' icon={accelerationSvg}/>
-          <Accessory name='180 HP' icon={forceSvg}/>
-          <Accessory name='Diesel' icon={gasolineSvg}/>
-          <Accessory name='Auto' icon={exchangeSvg}/>
-          <Accessory name='5 Pessoas' icon={peopleSvg}/>
-        </Acessories>
+        <Accessories>
+          { 
+            car.accessories.map(accessory => (
+              <Accessory 
+                key={accessory.type}
+                name={accessory.name} 
+                icon={speedSvg}
+              />
+            ))
+          }
+        </Accessories>
 
-        <About>
-          A Fiat Toro é uma picape fabricada pela Fiat no Brasil. 
-          Ele é derivado do Fiat FCC4 Concept e é baseado na arquitetura 
-          Small Wide 4×4 compartilhada com o Jeep Renegade, Jeep Compass e o Fiat 500X.
-        </About>
+        <About>{car.about}</About>
       </Content>
 
       <Footer>
