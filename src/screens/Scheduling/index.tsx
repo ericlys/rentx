@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTheme } from 'styled-components';
 import { BackButton } from '../../components/BackButton/inde';
 import { useNavigation, NavigationProp, ParamListBase} from '@react-navigation/native';
@@ -6,7 +6,13 @@ import { useNavigation, NavigationProp, ParamListBase} from '@react-navigation/n
 import ArrowSvg from '../../assets/arrow.svg';
 import { StatusBar } from 'expo-status-bar';
 import { Button } from '../../components/Button';
-import { Calendar } from '../../components/Calendar';
+
+import { 
+  Calendar, 
+  DayProps, 
+  generateInterval, 
+  MarkedDatesProps 
+} from '../../components/Calendar';
 
 import {
   Container,
@@ -21,9 +27,29 @@ import {
 } from './styles';
 
 export function Scheduling(){
-  const theme = useTheme();
+  const [lastSelectedDate, setLastSelectedData] = useState<DayProps>({} as DayProps);
+  const [markedDates, setMarkedDates] = useState<MarkedDatesProps>({} as MarkedDatesProps)
 
-  const { navigate }: NavigationProp<ParamListBase>  = useNavigation();
+  const theme = useTheme();
+  const { navigate, goBack }: NavigationProp<ParamListBase>  = useNavigation();
+
+  function handleBack() {
+    goBack();
+  }
+
+  function handleChangeDate(date: DayProps){
+    let start = !lastSelectedDate.timestamp ? date : lastSelectedDate;
+    let end = date;
+
+    if(start.timestamp > end.timestamp){
+      start = end;
+      end = start;
+    }
+
+    setLastSelectedData(end);
+    const interval = generateInterval(start, end);
+    setMarkedDates(interval);
+  }
 
   function handleConfirmRental() {
     navigate('SchedulingDetails');
@@ -37,7 +63,10 @@ export function Scheduling(){
           translucent
           backgroundColor='transparent'
         />
-        <BackButton color={theme.colors.shape}/>
+        <BackButton 
+          onPress={handleBack}
+          color={theme.colors.shape}
+        />
         <Title>
           Escolha uma {'\n'}
           data de inicio e{'\n'}
@@ -64,7 +93,10 @@ export function Scheduling(){
       </Header>
 
       <Content>
-        <Calendar/>
+        <Calendar 
+          markedDates={markedDates}
+          onDayPress={handleChangeDate}
+        />
       </Content>
 
       <Footer>
