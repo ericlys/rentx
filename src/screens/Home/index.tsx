@@ -26,6 +26,7 @@ export function Home(){
   function handleCarDetails(car:CarDTO) {
     navigate('CarDetails', { car });
   }
+  
   useEffect(()=> {
     async function fetchCars() {
       try {
